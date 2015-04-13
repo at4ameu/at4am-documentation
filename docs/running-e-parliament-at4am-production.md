@@ -26,6 +26,25 @@ AT4AM_TOMCAT=$(brew --prefix tomcat7)
 cd "<at4am/e-parliament>"
 ```
 
+
+
+### Configuration files
+
+Instead of overriding NSESA configuration in properties files in `$HOME`, a custom path can be used by setting an environment variable or java parameter. We already have `setenv.sh`, so it's convenient to use it for these overrides as well.
+
+Instead of having the database setup in `~/nsesa-server.properties`, let's use `<at4am/e-parliament>/nsesa-server.properties`. Edit `setenv.sh` and add `-DNSESA_EDITOR_AN_PROPERTIES=file://<at4am/e-parliament>/nsesa-server.properties`. You can also set `NSESA_EDITOR_AN_PROPERTIES` to override `nsesa-editor-an.properties`.
+
+
+```bash
+# Move database setup properties.
+mv ~/nsesa-server.properties "<at4am/e-parliament>/nsesa-server.properties"
+
+# Set path to nsesa-server.properties.
+"$EDITOR" "$AT4AM_TOMCAT"/libexec/bin/setenv.sh
+```
+
+
+
 ### Logging
 
 The default location for logs is `$PWD/../logs/`, which is relative to where Tomcat was started from. When running Tomcat as a service, that won't do.

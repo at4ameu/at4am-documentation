@@ -32,7 +32,10 @@ Documents to play around with.
 
 HOWTOs for techies.
 
-- [Running the e-parliament fork](https://github.com/at4ameu/at4am-documentation/blob/master/docs/running-e-parliament-at4am.md) (2015)
+- [Running the e-parliament (NSESA) project](https://github.com/at4ameu/at4am-documentation/blob/master/docs/running-e-parliament-at4am.md) (2015)
+- [Running the e-parliament (NSESA) project on production systems](https://github.com/at4ameu/at4am-documentation/blob/master/docs/running-e-parliament-at4am-production.md) (2015)
+- [Precompiled NSESA files](http://nsesa.org/)
+- [Technical documentation about NSESA](http://nsesa.org/uploads/doc/documentation.html)
 
 
 ## Deprecated links

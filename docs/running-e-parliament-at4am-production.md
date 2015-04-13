@@ -36,7 +36,7 @@ NSESA uses [log4j](https://logging.apache.org/log4j/) through [slf4j](http://www
 
 Example configuration. You might want to use [`SyslogAppender`](https://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/net/SyslogAppender.html) ([example](https://wiki.apache.org/logging-log4j/syslog)) or even [`SMTPAppender`](https://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/net/SMTPAppender.html) ([example](https://wiki.apache.org/logging-log4j/SMTPAppender)).
 
-**TODO:** Use [`org.apache.log4j.rolling.RollingFileAppender`](https://logging.apache.org/log4j/extras/apidocs/org/apache/log4j/rolling/RollingFileAppender.html) from [`log4j-extras`](https://logging.apache.org/log4j/extras/) when NSESA has upgraded to `log4j-1.2.17.jar`. Check for another (git) branch of this file for details.
+**NOTE:** [`org.apache.log4j.rolling.RollingFileAppender`](https://logging.apache.org/log4j/extras/apidocs/org/apache/log4j/rolling/RollingFileAppender.html) from [`log4j-extras`](https://logging.apache.org/log4j/extras/) requires NSESA to use `log4j-1.2.17.jar`. Remove this comment when that has been implemented.
 
 
 ```bash
@@ -50,20 +50,44 @@ sudo chgrp <tomcat-service-group> /var/log/nsesa/
 ```
 
 
+```bash
+# Download log4j extras to get the rolling file appender.
+LOG4JVERSION="1.2.17"
+wget "https://www.apache.org/dist/logging/log4j/extras/${LOG4JVERSION}/apache-log4j-extras-${LOG4JVERSION}-bin.tar.gz"
+
+# Be smart and verify the package.
+wget "https://www.apache.org/dist/logging/log4j/extras/${LOG4JVERSION}/apache-log4j-extras-${LOG4JVERSION}-bin.tar.gz.asc"
+wget  --output-document "KEYS.asc" "http://www.apache.org/dist/logging/KEYS"
+# You may or may not want to import all the Apache developers in KEYS.asc.
+gpg --import "KEYS.asc"
+gpg --verify "apache-log4j-extras-${LOG4JVERSION}-bin.tar.gz.asc"
+
+# Unpack to "<at4am/e-parliament>/lib" then put it in the Tomcat CLASSPATH in setenv.sh: `CLASSPATH="<at4am/e-parliament>/lib"`.
+# Could also extract to "$AT4AM_TOMCAT"/libexec/lib, which doesn't require setting CLASSPATH.
+mkdir -p "<at4am/e-parliament>/lib"
+tar -zxvf "apache-log4j-extras-${LOG4JVERSION}-bin.tar.gz" --strip-components=1 -C "lib/" "apache-log4j-extras-${LOG4JVERSION}/apache-log4j-extras-${LOG4JVERSION}.jar"
+```
+
+
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
 <log4j:configuration>
-    <appender name="nsesa-rollingfile" class="org.apache.log4j.RollingFileAppender">
+    <appender name="nsesa-rollingfile" class="org.apache.log4j.rolling.RollingFileAppender">
         <!-- Edit location! -->
         <param name="file" value="/var/log/nsesa/nsesa.log" />
-        <param name="MaxFileSize" value="10MB"/>
-		<param name="MaxBackupIndex" value="10" />
+        <param name="append" value="true" />
+        <param name="maxBackupIndex" value="90"/>
         <param name="encoding" value="UTF-8" />
 
+        <rollingPolicy class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
+            <!-- Edit location! -->
+            <param name="fileNamePattern" value="/var/log/nsesa/nsesa.%d.log.gz" />
+        </rollingPolicy>
+
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d{ISO8601} %p [%t] %c{2}: %m%n"/>
+            <param name="conversionPattern" value="%d{ISO8601} %p [%t] %c{2}: %m%n"/>
         </layout>
     </appender>
 

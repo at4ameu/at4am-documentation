@@ -20,11 +20,13 @@ This is a good place to start.
 
 Documents to play around with.
 
-*These URLs point to a specific server hosted by DFRI, and links may break.*
+*These URLs point to a demo server hosted by DFRI, and links may break.*
 
-- [EP example document](http://ghajini.dfri.se:8080/at4am/editor.html?documentID=http://at4amos.bitbucket.org/xml/COM_COM(2011)0883_EN.xml)
-- [UN example document](http://ghajini.dfri.se:8080/at4am/editor.html?documentID=http://at4amos.bitbucket.org/xml/1247866E.xml)
-- [Italian Senate example document](http://ghajini.dfri.se:8080/at4am/editor.html?documentID=http://www.senato.it/japp/bgt/showdoc/16/DDLPRES/691635/00691635.akn)
+If you are asked to log in, try username `guest` and password `guest`. This is a temporary measure until a proper user system is in place.
+
+- [EP example document](https://demo.at4am.eu/editor/amendment.html?id=http://at4amos.bitbucket.org/xml/COM_COM(2011)0883_EN.xml)
+- [UN example document](https://demo.at4am.eu/editor/amendment.html?id=http://at4amos.bitbucket.org/xml/1247866E.xml)
+- [Italian Senate example document](https://demo.at4am.eu/editor/amendment.html?id=http://www.senato.it/japp/bgt/showdoc/16/DDLPRES/691635/00691635.akn)
 
 
 
